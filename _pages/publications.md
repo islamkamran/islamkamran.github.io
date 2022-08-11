@@ -4,13 +4,7 @@ title: "Publications"
 permalink: /publications/
 author_profile: true
 ---
+  ## Cryptography
+  
+  <u><a href="https://www.techscience.com/cmc/v73n1/47856">A Highly Secure Image Encryption Scheme Using Quantum Walk and Chaos</a>.</u>
 
-{% if author.googlescholar %}
-  You can also find my articles on <u><a href="{{author.googlescholar}}">my Google Scholar profile</a>.</u>
-{% endif %}
-
-{% include base_path %}
-
-{% for post in site.publications reversed %}
-  {% include archive-single.html %}
-{% endfor %}
