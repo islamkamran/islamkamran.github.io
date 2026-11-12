@@ -12,8 +12,25 @@
       if (q === 'ar' || q === 'en') l = q;
       d.setAttribute('data-theme', t === 'dark' ? 'dark' : 'light');
       if (l === 'ar') { d.lang = 'ar'; d.dir = 'rtl'; d.classList.add('i18n-pending'); }
+
+      /* Intro animation: once per browser session, skipped for reduced-motion users */
+      var seen = false;
+      try { seen = sessionStorage.getItem('introSeen') === '1'; } catch (e) {}
+      var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (/[?&]intro\b/.test(location.search)) seen = false;            /* ?intro   = replay it */
+      if (!seen && !reduce && !/[?&]nointro\b/.test(location.search)) d.classList.add('intro-active');  /* ?nointro = skip it */
     })();
   </script>
+  <style>
+    /* Critical intro CSS: correct even before style.css arrives (no flash of the full signature) */
+    .intro { display: none; }
+    html.intro-active { overflow: hidden; background: #faf8f4; }
+    html.intro-active[data-theme="dark"] { background: #0e0e0d; }
+    html.intro-active .intro { display: grid; place-items: center; position: fixed; inset: 0; z-index: 1000; background: inherit; }
+    .intro-sig { width: min(340px, 64vw); height: auto; }
+    .intro .sig-full, .intro .intro-pen, .intro .pen-path, .intro-name span { opacity: 0; }
+    .intro .pen-path { opacity: 1; visibility: hidden; }
+  </style>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Muhammad Islam Kamran | Senior Backend & Distributed Systems Engineer</title>
   <meta name="description" content="Muhammad Islam Kamran: Senior Backend & Distributed Systems Engineer in Dubai. Python (FastAPI, Django), Kafka, Redis, PostgreSQL, AWS, LLM pipelines, and full-stack Angular.">
@@ -55,6 +72,64 @@
   </script>
 </head>
 <body>
+
+<!-- ============ INTRO (name + signature being signed) ============ -->
+<div class="intro" id="intro" aria-hidden="true">
+  <div class="intro-inner">
+    <svg class="intro-sig" viewBox="0 0 617 480" role="presentation">
+      <defs>
+        <filter id="sigTint" x="0" y="0" width="100%" height="100%">
+          <feFlood class="sig-flood"/>
+          <feComposite in2="SourceAlpha" operator="in"/>
+        </filter>
+        <!-- One mask per pen stroke (traced over the logo, in signing order).
+             Each stroke reveals only its own layer from images/sig/. -->
+        <mask id="sm0" maskUnits="userSpaceOnUse" x="0" y="0" width="617" height="480">
+          <path class="pen-path" data-pause="0" stroke-width="34" d="M148 4 L148 384"/>
+        </mask>
+        <mask id="sm1" maskUnits="userSpaceOnUse" x="0" y="0" width="617" height="480">
+          <path class="pen-path" data-pause="100" stroke-width="41" d="M214 206 L196 208 L180 216 L172 230 L182 239 L200 245 L215 251 L225 262 L222 278 L208 287 L190 286 L176 276 L172 264"/>
+        </mask>
+        <mask id="sm2" maskUnits="userSpaceOnUse" x="0" y="0" width="617" height="480">
+          <path class="pen-path" data-pause="30" stroke-width="38" d="M212 248 L228 240 L234 222 L238 190 L243 150 L249 120 L257 107 L266 110 L272 125 L272 150 L267 178 L260 205 L254 232 L252 252 L256 265 L268 268 L280 258"/>
+        </mask>
+        <mask id="sm3" maskUnits="userSpaceOnUse" x="0" y="0" width="617" height="480">
+          <path class="pen-path" data-pause="0" stroke-width="42" d="M280 258 L284 232 L296 207 L312 199 L325 210 L316 232 L300 250 L286 254 L292 256 L308 240 L322 220 L328 236 L330 252 L334 264 L346 262"/>
+        </mask>
+        <mask id="sm4" maskUnits="userSpaceOnUse" x="0" y="0" width="617" height="480">
+          <path class="pen-path" data-pause="0" stroke-width="38" d="M346 262 L345 232 L352 208 L362 212 L365 235 L366 252 L375 256 L382 232 L390 208 L398 212 L400 235 L404 250 L410 225 L414 208 L424 214 L430 240 L446 256"/>
+        </mask>
+        <mask id="sm5" maskUnits="userSpaceOnUse" x="0" y="0" width="617" height="480">
+          <path class="pen-path" data-pause="100" stroke-width="34" d="M443 34 L443 444 L442 463 L434 471 L426 458"/>
+        </mask>
+        <mask id="sm6" maskUnits="userSpaceOnUse" x="0" y="0" width="617" height="480">
+          <path class="pen-path" data-pause="120" stroke-width="46" d="M6 356 L60 335 L140 312 L220 298 L300 288 L380 280 L440 272 L500 268 L560 267 L598 268 L609 277 L599 288 L589 282"/>
+        </mask>
+        <mask id="sm7" maskUnits="userSpaceOnUse" x="0" y="0" width="617" height="480">
+          <path class="pen-path" data-pause="100" stroke-width="42" d="M139 400 L142 412"/>
+        </mask>
+      </defs>
+      <g class="sig-draw" filter="url(#sigTint)">
+        <image href="images/sig/0-I.png" width="617" height="480" mask="url(#sm0)"/>
+        <image href="images/sig/1-s.png" width="617" height="480" mask="url(#sm1)"/>
+        <image href="images/sig/2-l.png" width="617" height="480" mask="url(#sm2)"/>
+        <image href="images/sig/3-a.png" width="617" height="480" mask="url(#sm3)"/>
+        <image href="images/sig/4-m.png" width="617" height="480" mask="url(#sm4)"/>
+        <image href="images/sig/5-R.png" width="617" height="480" mask="url(#sm5)"/>
+        <image href="images/sig/6-U.png" width="617" height="480" mask="url(#sm6)"/>
+        <image href="images/sig/7-dot.png" width="617" height="480" mask="url(#sm7)"/>
+      </g>
+      <image class="sig-full" href="images/logo.png" width="617" height="480" filter="url(#sigTint)"/>
+      <circle class="intro-pen" r="6" cx="148" cy="4"/>
+    </svg>
+    <p class="intro-name">
+      <span data-i18n="intro_1">Muhammad</span>
+      <span data-i18n="intro_2">Islam</span>
+      <span data-i18n="intro_3">Kamran</span>
+    </p>
+  </div>
+  <button class="intro-skip" id="introSkip" type="button" tabindex="-1"><span data-i18n="intro_skip">Skip</span> <i class="fa-solid fa-forward"></i></button>
+</div>
 
 <!-- ============ HEADER ============ -->
 <header class="site-header" id="top">
@@ -520,6 +595,7 @@
 </footer>
 
 <script src="assets/js/i18n.js"></script>
+<script src="assets/js/intro.js"></script>
 <script src="assets/js/main.js"></script>
 </body>
 </html>

@@ -81,14 +81,22 @@
       });
     }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
 
-    reveals.forEach(function (el) {
-      var siblings = Array.prototype.filter.call(el.parentElement.children, function (c) {
-        return c.classList.contains('reveal');
+    var startReveal = function () {
+      reveals.forEach(function (el) {
+        var siblings = Array.prototype.filter.call(el.parentElement.children, function (c) {
+          return c.classList.contains('reveal');
+        });
+        var idx = siblings.indexOf(el);
+        el.style.transitionDelay = Math.min(idx, 6) * 80 + 'ms';
+        io.observe(el);
       });
-      var idx = siblings.indexOf(el);
-      el.style.transitionDelay = Math.min(idx, 6) * 80 + 'ms';
-      io.observe(el);
-    });
+    };
+    // If the intro is playing, start the page animations as it lifts away
+    if (root.classList.contains('intro-active')) {
+      document.addEventListener('introdone', startReveal, { once: true });
+    } else {
+      startReveal();
+    }
   } else {
     reveals.forEach(function (el) { el.classList.add('in'); });
   }
