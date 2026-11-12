@@ -1,13 +1,26 @@
 <!doctype html>
-<html lang="en" class="no-js">
+<html lang="en" dir="ltr" class="no-js" data-theme="dark">
 <head>
   <meta charset="utf-8">
-  <script>document.documentElement.classList.remove('no-js');</script>
+  <script>
+    /* Apply saved theme + language before first paint (no flash) */
+    (function () {
+      var d = document.documentElement, t, l;
+      d.classList.remove('no-js');
+      try { t = localStorage.getItem('theme'); l = localStorage.getItem('lang'); } catch (e) {}
+      var q = new URLSearchParams(location.search).get('lang');
+      if (q === 'ar' || q === 'en') l = q;
+      d.setAttribute('data-theme', t === 'dark' ? 'dark' : 'light');
+      if (l === 'ar') { d.lang = 'ar'; d.dir = 'rtl'; d.classList.add('i18n-pending'); }
+    })();
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Muhammad Islam Kamran | Senior Backend & Distributed Systems Engineer</title>
   <meta name="description" content="Muhammad Islam Kamran: Senior Backend & Distributed Systems Engineer in Dubai. Python (FastAPI, Django), Kafka, Redis, PostgreSQL, AWS, LLM pipelines, and full-stack Angular.">
   <meta name="author" content="Muhammad Islam Kamran">
   <link rel="canonical" href="https://islamkamran.github.io/">
+  <link rel="alternate" hreflang="en" href="https://islamkamran.github.io/">
+  <link rel="alternate" hreflang="ar" href="https://islamkamran.github.io/?lang=ar">
 
   <meta property="og:type" content="website">
   <meta property="og:title" content="Muhammad Islam Kamran | Senior Backend Engineer">
@@ -16,11 +29,11 @@
   <meta property="og:image" content="https://islamkamran.github.io/images/profile.jpg">
   <meta name="twitter:card" content="summary_large_image">
 
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%230e0e0d'/%3E%3Ctext x='50%25' y='56%25' text-anchor='middle' dominant-baseline='middle' font-family='Georgia,serif' font-size='30' fill='%23c9a86a'%3EIK%3C/text%3E%3C/svg%3E">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%230e0e0d'/%3E%3Ctext x='50%25' y='54%25' text-anchor='middle' dominant-baseline='middle' font-family='Arial,Helvetica,sans-serif' font-weight='700' font-size='26' fill='%23c9a86a'%3EIK%3C/text%3E%3C/svg%3E">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Manrope:wght@500;600;700;800&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="stylesheet" href="assets/css/style.css">
 
@@ -47,21 +60,29 @@
   <div class="container header-inner">
     <a href="#top" class="logo" aria-label="Home">
       <span class="logo-mark">IK</span>
-      <span class="logo-text">Islam Kamran</span>
+      <span class="logo-text" data-i18n="logo">Islam Kamran</span>
     </a>
 
     <nav class="nav" id="nav" aria-label="Main">
-      <a href="#about">About</a>
-      <a href="#work">Work</a>
-      <a href="#expertise">Expertise</a>
-      <a href="#experience">Experience</a>
-      <a href="#contact">Contact</a>
-      <a href="#contact" class="btn btn-outline btn-sm nav-cta">Inquire</a>
+      <a href="#about" data-i18n="nav_about">About</a>
+      <a href="#work" data-i18n="nav_work">Work</a>
+      <a href="#expertise" data-i18n="nav_expertise">Expertise</a>
+      <a href="#experience" data-i18n="nav_experience">Experience</a>
+      <a href="#contact" data-i18n="nav_contact">Contact</a>
+      <a href="#contact" class="btn btn-outline btn-sm nav-cta" data-i18n="nav_inquire">Enquire</a>
     </nav>
 
-    <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav">
-      <span></span><span></span>
-    </button>
+    <div class="controls">
+      <button class="ctrl lang-toggle" id="langToggle" type="button" aria-label="التبديل إلى العربية" title="العربية">
+        <span class="lang-ar">عربي</span><span class="lang-en">EN</span>
+      </button>
+      <button class="ctrl theme-toggle" id="themeToggle" type="button" aria-label="Toggle light / dark mode" title="Light / Dark">
+        <i class="fa-solid fa-sun icon-sun"></i><i class="fa-solid fa-moon icon-moon"></i>
+      </button>
+      <button class="nav-toggle" id="navToggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav">
+        <span></span><span></span>
+      </button>
+    </div>
   </div>
 </header>
 
@@ -71,36 +92,33 @@
 <section class="hero">
   <div class="container hero-grid">
     <div class="hero-copy">
-      <p class="eyebrow reveal">Senior Backend &amp; Distributed Systems Engineer</p>
-      <h1 class="hero-title reveal">
-        Muhammad<br>
-        <em>Islam Kamran</em>
-      </h1>
-      <p class="hero-lead reveal">
+      <p class="eyebrow reveal" data-i18n="hero_eyebrow">Senior Backend &amp; Distributed Systems Engineer</p>
+      <h1 class="hero-title reveal" data-i18n="hero_title">Muhammad<br><em>Islam Kamran</em></h1>
+      <p class="hero-lead reveal" data-i18n="hero_lead">
         I design and lead high-throughput backend systems: event-driven microservices,
         financial-grade data pipelines and LLM-powered workflows that stay fast and reliable at scale.
       </p>
 
       <div class="hero-meta reveal">
-        <span><i class="fa-solid fa-location-dot"></i> Dubai, UAE</span>
-        <span><i class="fa-solid fa-briefcase"></i> 4.5+ years experience</span>
-        <span class="status"><i class="dot"></i> Open to opportunities</span>
+        <span><i class="fa-solid fa-location-dot"></i> <span data-i18n="loc_dubai">Dubai, UAE</span></span>
+        <span><i class="fa-solid fa-briefcase"></i> <span data-i18n="hero_years">4.5+ years experience</span></span>
+        <span class="status"><i class="dot"></i> <span data-i18n="hero_open">Open to opportunities</span></span>
       </div>
 
       <div class="hero-actions reveal">
-        <a href="#work" class="btn btn-gold">View my work</a>
+        <a href="#work" class="btn btn-gold" data-i18n="btn_work">View my work</a>
         <div class="cv-menu">
-          <button class="btn btn-outline" id="cvToggle" aria-expanded="false" aria-controls="cvList">
-            Download CV <i class="fa-solid fa-chevron-down"></i>
+          <button class="btn btn-outline" id="cvToggle" type="button" aria-expanded="false" aria-controls="cvList">
+            <span data-i18n="btn_cv">Download CV</span> <i class="fa-solid fa-chevron-down"></i>
           </button>
           <div class="cv-list" id="cvList" role="menu">
             <a href="files/Muhammad_Islam_Kamran_Backend_Engineer.pdf" target="_blank" rel="noopener" role="menuitem">
               <i class="fa-solid fa-server"></i>
-              <span><strong>Backend &amp; AI</strong><small>Distributed systems, Kafka, LLM</small></span>
+              <span><strong data-i18n="cv_be">Backend &amp; AI</strong><small data-i18n="cv_be_sub">Distributed systems, Kafka, LLM</small></span>
             </a>
             <a href="files/Muhammad_Islam_Kamran_FullStack_Engineer.pdf" target="_blank" rel="noopener" role="menuitem">
               <i class="fa-solid fa-layer-group"></i>
-              <span><strong>Full Stack</strong><small>Python + Angular</small></span>
+              <span><strong data-i18n="cv_fs">Full Stack</strong><small data-i18n="cv_fs_sub">Python + Angular</small></span>
             </a>
           </div>
         </div>
@@ -120,8 +138,8 @@
         <img src="images/profile.jpg" alt="Portrait of Muhammad Islam Kamran" width="1024" height="1024">
       </div>
       <div class="portrait-badge">
-        <span class="badge-kicker">Currently</span>
-        <span class="badge-title">Team Lead, Software Engineering</span>
+        <span class="badge-kicker" data-i18n="badge_kicker">Currently</span>
+        <span class="badge-title" data-i18n="badge_title">Team Lead, Software Engineering</span>
         <span class="badge-sub">Indus Real Estate · Apparel Group</span>
       </div>
     </div>
@@ -133,13 +151,13 @@
 <!-- ============ RESULTS STRIP ============ -->
 <section class="results" aria-label="Key results">
   <div class="container">
-    <p class="results-label reveal">Results-focused engineering</p>
+    <p class="results-label reveal" data-i18n="results_label">Results-focused engineering</p>
     <div class="results-grid">
-      <div class="result reveal"><span class="num">87<sup>%</sup></span><span class="lbl">API latency cut<br>1.8s → &lt;220ms</span></div>
-      <div class="result reveal"><span class="num">99.95<sup>%</sup></span><span class="lbl">Platform<br>availability SLA</span></div>
-      <div class="result reveal"><span class="num">99.4<sup>%</sup></span><span class="lbl">Fewer financial<br>discrepancies</span></div>
-      <div class="result reveal"><span class="num">10K<sup>+</sup></span><span class="lbl">Daily active users<br>on real-time portals</span></div>
-      <div class="result reveal"><span class="num">&gt;85<sup>%</sup></span><span class="lbl">Test coverage<br>across CI/CD</span></div>
+      <div class="result reveal"><span class="num">87<sup>%</sup></span><span class="lbl" data-i18n="r1">API latency cut<br>1.8s → &lt;220ms</span></div>
+      <div class="result reveal"><span class="num">99.95<sup>%</sup></span><span class="lbl" data-i18n="r2">Platform<br>availability SLA</span></div>
+      <div class="result reveal"><span class="num">99.4<sup>%</sup></span><span class="lbl" data-i18n="r3">Fewer financial<br>discrepancies</span></div>
+      <div class="result reveal"><span class="num">10K<sup>+</sup></span><span class="lbl" data-i18n="r4">Daily active users<br>on real-time portals</span></div>
+      <div class="result reveal"><span class="num">&gt;85<sup>%</sup></span><span class="lbl" data-i18n="r5">Test coverage<br>across CI/CD</span></div>
     </div>
   </div>
 </section>
@@ -148,31 +166,31 @@
 <section class="section" id="about">
   <div class="container about-grid">
     <div class="section-head reveal">
-      <p class="eyebrow">About</p>
-      <h2>Systems that scale,<br><em>teams that ship.</em></h2>
+      <p class="eyebrow" data-i18n="about_eyebrow">About</p>
+      <h2 data-i18n="about_title">Systems that scale,<br><em>teams that ship.</em></h2>
     </div>
     <div class="about-body reveal">
-      <p>
+      <p data-i18n="about_p1">
         I'm a backend-first engineer based in Dubai with 4.5+ years building production systems for
         real estate, automotive trading and US healthcare. My core is <strong>Python (FastAPI, Django)</strong>,
         <strong>PostgreSQL</strong>, <strong>Kafka</strong> and <strong>Redis</strong>, deployed on
         <strong>AWS</strong> with Docker and Kubernetes.
       </p>
-      <p>
+      <p data-i18n="about_p2">
         Today I lead a squad of four engineers at Indus Real Estate (Apparel Group). I architect microservices,
         financial reconciliation engines and real-time streaming layers, and I hold the team to rigorous code
         review and testing standards. I also build the other side of the wire: Angular/TypeScript portals used
         by thousands of people every day.
       </p>
-      <p>
+      <p data-i18n="about_p3">
         I started out in research. My MS at Quaid-i-Azam University produced a first-author paper on
         quantum-walk image encryption, and I still apply that rigour to engineering decisions.
       </p>
       <dl class="facts">
-        <div><dt>Focus</dt><dd>Backend, distributed systems, AI pipelines</dd></div>
-        <div><dt>Also</dt><dd>Full stack with Angular / TypeScript</dd></div>
-        <div><dt>Education</dt><dd>MS Computer Science, QAU</dd></div>
-        <div><dt>Based in</dt><dd>Dubai, UAE</dd></div>
+        <div><dt data-i18n="f1_k">Focus</dt><dd data-i18n="f1_v">Backend, distributed systems, AI pipelines</dd></div>
+        <div><dt data-i18n="f2_k">Also</dt><dd data-i18n="f2_v">Full stack with Angular / TypeScript</dd></div>
+        <div><dt data-i18n="f3_k">Education</dt><dd data-i18n="f3_v">MS Computer Science, QAU</dd></div>
+        <div><dt data-i18n="f4_k">Based in</dt><dd data-i18n="loc_dubai">Dubai, UAE</dd></div>
       </dl>
     </div>
   </div>
@@ -182,118 +200,118 @@
 <section class="section section-alt" id="work">
   <div class="container">
     <div class="section-head center reveal">
-      <p class="eyebrow">Selected work</p>
-      <h2>Featured <em>projects</em></h2>
-      <p class="section-sub">Systems I've architected and shipped, and what they changed.</p>
+      <p class="eyebrow" data-i18n="work_eyebrow">Selected work</p>
+      <h2 data-i18n="work_title">Featured <em>projects</em></h2>
+      <p class="section-sub" data-i18n="work_sub">Systems I've architected and shipped, and what they changed.</p>
     </div>
 
     <div class="work-grid">
 
       <article class="card flagship reveal">
-        <div class="card-visual v1"><span class="card-no">01</span><span class="card-tag">FinTech · Backend</span></div>
+        <div class="card-visual v1"><span class="card-no">01</span><span class="card-tag" data-i18n="p1_tag">FinTech · Backend</span></div>
         <div class="card-body">
-          <h3>Reconciliation &amp; Settlement Engine</h3>
-          <p>A 3-way reconciliation and financial settlement engine with ACID guarantees, idempotent retries and distributed audit logging.</p>
+          <h3 data-i18n="p1_t">Reconciliation &amp; Settlement Engine</h3>
+          <p data-i18n="p1_d">A 3-way reconciliation and financial settlement engine with ACID guarantees, idempotent retries and distributed audit logging.</p>
           <ul class="highlights">
-            <li>ACID-compliant settlement flows on PostgreSQL</li>
-            <li>Idempotent retry logic, safe to re-run without side effects</li>
-            <li>Distributed audit logging for every transaction</li>
+            <li data-i18n="p1_h1">ACID-compliant settlement flows on PostgreSQL</li>
+            <li data-i18n="p1_h2">Idempotent retry logic, safe to re-run without side effects</li>
+            <li data-i18n="p1_h3">Distributed audit logging for every transaction</li>
           </ul>
           <ul class="kv">
-            <li><span>Impact</span><strong>−99.4% discrepancies</strong></li>
-            <li><span>Stack</span><strong>FastAPI · PostgreSQL · Redis</strong></li>
-            <li><span>Year</span><strong>2025</strong></li>
-          </ul>
-        </div>
-      </article>
-
-      <article class="card reveal">
-        <div class="card-visual v2"><span class="card-no">02</span><span class="card-tag">Real-time · Streaming</span></div>
-        <div class="card-body">
-          <h3>Event-Driven Inventory Streaming</h3>
-          <p>Kafka streaming layer with per-entity partition-key ordering, plus WebSockets pushing live inventory to enterprise client portals.</p>
-          <ul class="kv">
-            <li><span>Impact</span><strong>&lt;200ms end-to-end</strong></li>
-            <li><span>Stack</span><strong>Kafka · WebSockets · Redis</strong></li>
-            <li><span>Year</span><strong>2025</strong></li>
+            <li><span data-i18n="k_impact">Impact</span><strong data-i18n="p1_i">−99.4% discrepancies</strong></li>
+            <li><span data-i18n="k_stack">Stack</span><strong>FastAPI · PostgreSQL · Redis</strong></li>
+            <li><span data-i18n="k_year">Year</span><strong>2025</strong></li>
           </ul>
         </div>
       </article>
 
       <article class="card reveal">
-        <div class="card-visual v3"><span class="card-no">03</span><span class="card-tag">Full Stack · Enterprise</span></div>
+        <div class="card-visual v2"><span class="card-no">02</span><span class="card-tag" data-i18n="p2_tag">Real-time · Streaming</span></div>
         <div class="card-body">
-          <h3>Enterprise Multi-Portal Ecosystem</h3>
-          <p>Client and broker portals with multi-tenant authorization, real-time listing feeds and automated PDF statements. Also 15+ high-conversion landing pages.</p>
+          <h3 data-i18n="p2_t">Event-Driven Inventory Streaming</h3>
+          <p data-i18n="p2_d">Kafka streaming layer with per-entity partition-key ordering, plus WebSockets pushing live inventory to enterprise client portals.</p>
           <ul class="kv">
-            <li><span>Impact</span><strong>−85% render latency</strong></li>
-            <li><span>Stack</span><strong>Angular · RxJS · FastAPI · AWS</strong></li>
-            <li><span>Year</span><strong>2025</strong></li>
+            <li><span data-i18n="k_impact">Impact</span><strong data-i18n="p2_i">&lt;200ms end-to-end</strong></li>
+            <li><span data-i18n="k_stack">Stack</span><strong>Kafka · WebSockets · Redis</strong></li>
+            <li><span data-i18n="k_year">Year</span><strong>2025</strong></li>
           </ul>
         </div>
       </article>
 
       <article class="card reveal">
-        <div class="card-visual v4"><span class="card-no">04</span><span class="card-tag">AI · LLM</span></div>
+        <div class="card-visual v3"><span class="card-no">03</span><span class="card-tag" data-i18n="p3_tag">Full Stack · Enterprise</span></div>
         <div class="card-body">
-          <h3>LLM Inquiry Classification Pipeline</h3>
-          <p>Parses unstructured customer inquiries with LLM APIs, scores intent and routes verified leads straight into the CRM.</p>
+          <h3 data-i18n="p3_t">Enterprise Multi-Portal Ecosystem</h3>
+          <p data-i18n="p3_d">Client and broker portals with multi-tenant authorization, real-time listing feeds and automated PDF statements. Also 15+ high-conversion landing pages.</p>
           <ul class="kv">
-            <li><span>Impact</span><strong>Automated lead routing</strong></li>
-            <li><span>Stack</span><strong>Python · LLM APIs · pgvector</strong></li>
-            <li><span>Year</span><strong>2025</strong></li>
+            <li><span data-i18n="k_impact">Impact</span><strong data-i18n="p3_i">−85% render latency</strong></li>
+            <li><span data-i18n="k_stack">Stack</span><strong>Angular · RxJS · FastAPI · AWS</strong></li>
+            <li><span data-i18n="k_year">Year</span><strong>2025</strong></li>
           </ul>
         </div>
       </article>
 
       <article class="card reveal">
-        <div class="card-visual v5"><span class="card-no">05</span><span class="card-tag">E-Commerce · Automotive</span></div>
+        <div class="card-visual v4"><span class="card-no">04</span><span class="card-tag" data-i18n="p4_tag">AI · LLM</span></div>
         <div class="card-body">
-          <h3>Automotive E-Commerce &amp; Auction Engine</h3>
-          <p>A commercial vehicle trading platform with real-time bidding feeds, sliding-window rate limiters and multi-tier caching.</p>
+          <h3 data-i18n="p4_t">LLM Inquiry Classification Pipeline</h3>
+          <p data-i18n="p4_d">Parses unstructured customer inquiries with LLM APIs, scores intent and routes verified leads straight into the CRM.</p>
           <ul class="kv">
-            <li><span>Impact</span><strong>Sub-100ms search · 99.95% uptime</strong></li>
-            <li><span>Stack</span><strong>Python · Angular · Redis · MySQL</strong></li>
-            <li><span>Year</span><strong>2024</strong></li>
+            <li><span data-i18n="k_impact">Impact</span><strong data-i18n="p4_i">Automated lead routing</strong></li>
+            <li><span data-i18n="k_stack">Stack</span><strong>Python · LLM APIs · pgvector</strong></li>
+            <li><span data-i18n="k_year">Year</span><strong>2025</strong></li>
           </ul>
         </div>
       </article>
 
       <article class="card reveal">
-        <div class="card-visual v6"><span class="card-no">06</span><span class="card-tag">Data · Pipelines</span></div>
+        <div class="card-visual v5"><span class="card-no">05</span><span class="card-tag" data-i18n="p5_tag">E-Commerce · Automotive</span></div>
         <div class="card-body">
-          <h3>High-Volume Document Ingestion</h3>
-          <p>An async S3 presigned-URL ingestion service with parallel worker queues for batch document processing.</p>
+          <h3 data-i18n="p5_t">Automotive E-Commerce &amp; Auction Engine</h3>
+          <p data-i18n="p5_d">A commercial vehicle trading platform with real-time bidding feeds, sliding-window rate limiters and multi-tier caching.</p>
           <ul class="kv">
-            <li><span>Impact</span><strong>15 min → 3 min · 98% accuracy</strong></li>
-            <li><span>Stack</span><strong>AsyncIO · S3 · Docker · AWS</strong></li>
-            <li><span>Year</span><strong>2025</strong></li>
+            <li><span data-i18n="k_impact">Impact</span><strong data-i18n="p5_i">Sub-100ms search · 99.95% uptime</strong></li>
+            <li><span data-i18n="k_stack">Stack</span><strong>Python · Angular · Redis · MySQL</strong></li>
+            <li><span data-i18n="k_year">Year</span><strong>2024</strong></li>
           </ul>
         </div>
       </article>
 
       <article class="card reveal">
-        <div class="card-visual v7"><span class="card-no">07</span><span class="card-tag">HealthTech · EdTech</span></div>
+        <div class="card-visual v6"><span class="card-no">06</span><span class="card-tag" data-i18n="p6_tag">Data · Pipelines</span></div>
         <div class="card-body">
-          <h3>Speech Scoring &amp; Medical OCR</h3>
-          <p>Whisper-based pronunciation scoring for Rosetta Stone Language Lab, plus OCR pipelines that parse 47+ US insurance card schemas.</p>
+          <h3 data-i18n="p6_t">High-Volume Document Ingestion</h3>
+          <p data-i18n="p6_d">An async S3 presigned-URL ingestion service with parallel worker queues for batch document processing.</p>
           <ul class="kv">
-            <li><span>Impact</span><strong>Deployed across 21 US states</strong></li>
-            <li><span>Stack</span><strong>Django · Flask · Whisper · MongoDB</strong></li>
-            <li><span>Year</span><strong>2022–23</strong></li>
+            <li><span data-i18n="k_impact">Impact</span><strong data-i18n="p6_i">15 min → 3 min · 98% accuracy</strong></li>
+            <li><span data-i18n="k_stack">Stack</span><strong>AsyncIO · S3 · Docker · AWS</strong></li>
+            <li><span data-i18n="k_year">Year</span><strong>2025</strong></li>
           </ul>
         </div>
       </article>
 
       <article class="card reveal">
-        <div class="card-visual v8"><span class="card-no">08</span><span class="card-tag">Research · Cryptography</span></div>
+        <div class="card-visual v7"><span class="card-no">07</span><span class="card-tag" data-i18n="p7_tag">HealthTech · EdTech</span></div>
         <div class="card-body">
-          <h3>Quantum Walk Image Encryption</h3>
-          <p>First-author, peer-reviewed paper: a confusion-diffusion image encryption scheme using quantum walks and chaotic logistic maps.</p>
+          <h3 data-i18n="p7_t">Speech Scoring &amp; Medical OCR</h3>
+          <p data-i18n="p7_d">Whisper-based pronunciation scoring for Rosetta Stone Language Lab, plus OCR pipelines that parse 47+ US insurance card schemas.</p>
           <ul class="kv">
-            <li><span>Published</span><strong>CMC · Impact Factor 3.7</strong></li>
-            <li><span>Stack</span><strong>MATLAB · Chaos Theory</strong></li>
-            <li><span>Read</span><strong><a href="https://www.techscience.com/cmc/v73n1/47856" target="_blank" rel="noopener">View paper <i class="fa-solid fa-arrow-up-right-from-square"></i></a></strong></li>
+            <li><span data-i18n="k_impact">Impact</span><strong data-i18n="p7_i">Deployed across 21 US states</strong></li>
+            <li><span data-i18n="k_stack">Stack</span><strong>Django · Flask · Whisper · MongoDB</strong></li>
+            <li><span data-i18n="k_year">Year</span><strong>2022–23</strong></li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="card reveal">
+        <div class="card-visual v8"><span class="card-no">08</span><span class="card-tag" data-i18n="p8_tag">Research · Cryptography</span></div>
+        <div class="card-body">
+          <h3 data-i18n="p8_t">Quantum Walk Image Encryption</h3>
+          <p data-i18n="p8_d">First-author, peer-reviewed paper: a confusion-diffusion image encryption scheme using quantum walks and chaotic logistic maps.</p>
+          <ul class="kv">
+            <li><span data-i18n="k_published">Published</span><strong data-i18n="pub_venue">CMC · Impact Factor 3.7</strong></li>
+            <li><span data-i18n="k_stack">Stack</span><strong data-i18n="p8_s">MATLAB · Chaos Theory</strong></li>
+            <li><span data-i18n="k_read">Read</span><strong><a href="https://www.techscience.com/cmc/v73n1/47856" target="_blank" rel="noopener"><span data-i18n="view_paper">View paper</span> <i class="fa-solid fa-arrow-up-right-from-square"></i></a></strong></li>
           </ul>
         </div>
       </article>
@@ -306,8 +324,8 @@
 <section class="section" id="expertise">
   <div class="container">
     <div class="section-head center reveal">
-      <p class="eyebrow">Expertise</p>
-      <h2>What I <em>bring</em></h2>
+      <p class="eyebrow" data-i18n="exp_eyebrow">Expertise</p>
+      <h2 data-i18n="exp_title">What I <em>bring</em></h2>
     </div>
 
     <div class="expertise-grid">
@@ -315,8 +333,8 @@
         <div class="exp-head">
           <div class="exp-icon"><i class="fa-solid fa-server"></i></div>
           <div>
-            <h3>Backend &amp; Distributed Systems</h3>
-            <p class="exp-note">Core specialty</p>
+            <h3 data-i18n="e1_t">Backend &amp; Distributed Systems</h3>
+            <p class="exp-note" data-i18n="e1_n">Core specialty</p>
           </div>
         </div>
         <ul class="chips">
@@ -329,44 +347,44 @@
 
       <div class="exp-block reveal">
         <div class="exp-icon"><i class="fa-solid fa-brain"></i></div>
-        <h3>AI &amp; Data</h3>
-        <p class="exp-note">LLM pipelines &amp; data integrity</p>
+        <h3 data-i18n="e2_t">AI &amp; Data</h3>
+        <p class="exp-note" data-i18n="e2_n">LLM pipelines &amp; data integrity</p>
         <ul class="chips">
-          <li>LLM Integration</li><li>Prompt Pipelines</li><li>OpenAI Whisper</li>
+          <li data-i18n="c_llm">LLM Integration</li><li>Prompt Pipelines</li><li>OpenAI Whisper</li>
           <li>pgvector Embeddings</li><li>OCR</li><li>Pandas</li><li>DuckDB</li>
-          <li>ACID Reconciliation</li><li>Idempotency</li><li>Audit Trails</li>
+          <li>ACID Reconciliation</li><li>Idempotency</li><li data-i18n="c_audit">Audit Trails</li>
         </ul>
       </div>
 
       <div class="exp-block reveal">
         <div class="exp-icon"><i class="fa-brands fa-angular"></i></div>
-        <h3>Frontend &amp; Full Stack</h3>
-        <p class="exp-note">End-to-end delivery</p>
+        <h3 data-i18n="e3_t">Frontend &amp; Full Stack</h3>
+        <p class="exp-note" data-i18n="e3_n">End-to-end delivery</p>
         <ul class="chips">
           <li>Angular (v12–17+)</li><li>TypeScript</li><li>RxJS</li><li>NgRx</li>
-          <li>JavaScript ES6+</li><li>HTML5 / SCSS</li><li>Responsive UI</li><li>Flutter</li>
+          <li>JavaScript ES6+</li><li>HTML5 / SCSS</li><li data-i18n="c_responsive">Responsive UI</li><li>Flutter</li>
         </ul>
       </div>
 
       <div class="exp-block reveal">
         <div class="exp-icon"><i class="fa-solid fa-cloud"></i></div>
-        <h3>Cloud, DevOps &amp; Quality</h3>
-        <p class="exp-note">Ship safely, run reliably</p>
+        <h3 data-i18n="e4_t">Cloud, DevOps &amp; Quality</h3>
+        <p class="exp-note" data-i18n="e4_n">Ship safely, run reliably</p>
         <ul class="chips">
           <li>AWS (EC2, S3, RDS, CloudWatch)</li><li>Docker</li><li>Kubernetes (EKS)</li>
-          <li>Nginx</li><li>Linux</li><li>GitHub Actions</li><li>Zero-Downtime Deploys</li>
-          <li>PyTest</li><li>Incident Response</li>
+          <li>Nginx</li><li>Linux</li><li>GitHub Actions</li><li data-i18n="c_zero">Zero-Downtime Deploys</li>
+          <li>PyTest</li><li data-i18n="c_incident">Incident Response</li>
         </ul>
       </div>
 
       <div class="exp-block reveal">
         <div class="exp-icon"><i class="fa-solid fa-people-group"></i></div>
-        <h3>Engineering Leadership</h3>
-        <p class="exp-note">Leading a squad of 4 engineers</p>
+        <h3 data-i18n="e5_t">Engineering Leadership</h3>
+        <p class="exp-note" data-i18n="e5_n">Leading a squad of 4 engineers</p>
         <ul class="chips">
-          <li>Squad Leadership</li><li>Peer Code Reviews</li><li>Definition of Done</li>
-          <li>Shift-Left Testing</li><li>Clean Architecture</li><li>High Availability (99.95% SLA)</li>
-          <li>Agile Delivery</li><li>Technical Consulting</li>
+          <li data-i18n="c_squad">Squad Leadership</li><li data-i18n="c_review">Peer Code Reviews</li><li data-i18n="c_dod">Definition of Done</li>
+          <li data-i18n="c_shift">Shift-Left Testing</li><li data-i18n="c_clean">Clean Architecture</li><li data-i18n="c_ha">High Availability (99.95% SLA)</li>
+          <li data-i18n="c_agile">Agile Delivery</li><li data-i18n="c_consult">Technical Consulting</li>
         </ul>
       </div>
     </div>
@@ -377,48 +395,48 @@
 <section class="section section-alt" id="experience">
   <div class="container">
     <div class="section-head center reveal">
-      <p class="eyebrow">Career</p>
-      <h2>Professional <em>experience</em></h2>
+      <p class="eyebrow" data-i18n="car_eyebrow">Career</p>
+      <h2 data-i18n="car_title">Professional <em>experience</em></h2>
     </div>
 
     <ol class="timeline">
       <li class="tl-item reveal">
-        <div class="tl-date">Mar 2025 — Present</div>
+        <div class="tl-date" data-i18n="j1_date">Mar 2025 — Present</div>
         <div class="tl-content">
-          <h3>Team Lead, Software Engineering &amp; Architecture</h3>
-          <p class="tl-org">Indus Real Estate LLC · Apparel Group <span>Dubai, UAE</span></p>
+          <h3 data-i18n="j1_t">Team Lead, Software Engineering &amp; Architecture</h3>
+          <p class="tl-org">Indus Real Estate LLC · Apparel Group <span data-i18n="loc_dubai">Dubai, UAE</span></p>
           <ul>
-            <li>Architect high-throughput FastAPI/PostgreSQL microservices; Redis cache-aside layers cut latency from 1.8s to under 220ms.</li>
-            <li>Built a 3-way ACID reconciliation and settlement engine that cut transaction discrepancies by 99.4%.</li>
-            <li>Designed Kafka + WebSocket streaming for real-time inventory serving 10,000+ daily users.</li>
-            <li>Lead a squad of 4 engineers with mandatory code reviews and over 85% PyTest coverage on every build.</li>
+            <li data-i18n="j1_b1">Architect high-throughput FastAPI/PostgreSQL microservices; Redis cache-aside layers cut latency from 1.8s to under 220ms.</li>
+            <li data-i18n="j1_b2">Built a 3-way ACID reconciliation and settlement engine that cut transaction discrepancies by 99.4%.</li>
+            <li data-i18n="j1_b3">Designed Kafka + WebSocket streaming for real-time inventory serving 10,000+ daily users.</li>
+            <li data-i18n="j1_b4">Lead a squad of 4 engineers with mandatory code reviews and over 85% PyTest coverage on every build.</li>
           </ul>
         </div>
       </li>
 
       <li class="tl-item reveal">
-        <div class="tl-date">May 2024 — Present</div>
+        <div class="tl-date" data-i18n="j2_date">May 2024 — Present</div>
         <div class="tl-content">
-          <h3>Lead Backend Engineer &amp; Technical Consultant</h3>
-          <p class="tl-org">Business Innovation &amp; Tech Solutions (BITS) <span>Hybrid · Dubai / Pakistan</span></p>
+          <h3 data-i18n="j2_t">Lead Backend Engineer &amp; Technical Consultant</h3>
+          <p class="tl-org">Business Innovation &amp; Tech Solutions (BITS) <span data-i18n="j2_loc">Hybrid · Dubai / Pakistan</span></p>
           <ul>
-            <li>Designed FastAPI + TypeScript microservices for enterprise automotive trading platforms.</li>
-            <li>Built sliding-window rate limiters and multi-tier Redis caching that keep the platform at 99.95% availability.</li>
-            <li>Built AsyncIO/Celery pipelines for bulk inventory reconciliation with zero data loss.</li>
-            <li>Set up Docker + AWS deployments with zero-downtime GitHub Actions rollouts.</li>
+            <li data-i18n="j2_b1">Designed FastAPI + TypeScript microservices for enterprise automotive trading platforms.</li>
+            <li data-i18n="j2_b2">Built sliding-window rate limiters and multi-tier Redis caching that keep the platform at 99.95% availability.</li>
+            <li data-i18n="j2_b3">Built AsyncIO/Celery pipelines for bulk inventory reconciliation with zero data loss.</li>
+            <li data-i18n="j2_b4">Set up Docker + AWS deployments with zero-downtime GitHub Actions rollouts.</li>
           </ul>
         </div>
       </li>
 
       <li class="tl-item reveal">
-        <div class="tl-date">Oct 2022 — Apr 2023</div>
+        <div class="tl-date" data-i18n="j3_date">Oct 2022 — Apr 2023</div>
         <div class="tl-content">
-          <h3>Python Backend Engineer</h3>
-          <p class="tl-org">CareCloud <span>United States · Remote</span></p>
+          <h3 data-i18n="j3_t">Python Backend Engineer</h3>
+          <p class="tl-org">CareCloud <span data-i18n="j3_loc">United States · Remote</span></p>
           <ul>
-            <li>Built Django APIs for Rosetta Stone Language Lab with OpenAI Whisper pronunciation scoring.</li>
-            <li>Built Flask OCR and bot pipelines that extract data from 47+ US insurance card schemas.</li>
-            <li>Built data ingestion for the FOX Caregiver platform across 21 US states.</li>
+            <li data-i18n="j3_b1">Built Django APIs for Rosetta Stone Language Lab with OpenAI Whisper pronunciation scoring.</li>
+            <li data-i18n="j3_b2">Built Flask OCR and bot pipelines that extract data from 47+ US insurance card schemas.</li>
+            <li data-i18n="j3_b3">Built data ingestion for the FOX Caregiver platform across 21 US states.</li>
           </ul>
         </div>
       </li>
@@ -428,25 +446,25 @@
       <div class="edu reveal">
         <i class="fa-solid fa-graduation-cap"></i>
         <div>
-          <h4>MS Computer Science</h4>
-          <p>Quaid-i-Azam University, Islamabad</p>
+          <h4 data-i18n="ed1_t">MS Computer Science</h4>
+          <p data-i18n="ed1_s">Quaid-i-Azam University, Islamabad</p>
           <span>2020 — 2022</span>
         </div>
       </div>
       <div class="edu reveal">
         <i class="fa-solid fa-microchip"></i>
         <div>
-          <h4>BS Computer Systems Engineering</h4>
-          <p>UET Peshawar</p>
+          <h4 data-i18n="ed2_t">BS Computer Systems Engineering</h4>
+          <p data-i18n="ed2_s">UET Peshawar</p>
           <span>2016 — 2020</span>
         </div>
       </div>
       <div class="edu reveal">
         <i class="fa-solid fa-award"></i>
         <div>
-          <h4>Peer-reviewed publication</h4>
-          <p><a href="https://www.techscience.com/cmc/v73n1/47856" target="_blank" rel="noopener">CMC journal · Impact Factor 3.7</a></p>
-          <span>First author</span>
+          <h4 data-i18n="ed3_t">Peer-reviewed publication</h4>
+          <p><a href="https://www.techscience.com/cmc/v73n1/47856" target="_blank" rel="noopener" data-i18n="pub_venue">CMC journal · Impact Factor 3.7</a></p>
+          <span data-i18n="ed3_s">First author</span>
         </div>
       </div>
     </div>
@@ -456,24 +474,24 @@
 <!-- ============ CONTACT ============ -->
 <section class="section contact" id="contact">
   <div class="container contact-inner">
-    <p class="eyebrow reveal">Inquire</p>
-    <h2 class="reveal">Let's build something<br><em>that scales.</em></h2>
-    <p class="section-sub reveal">Open to senior backend, tech lead and full-stack roles, and to consulting on distributed systems and AI pipelines.</p>
+    <p class="eyebrow reveal" data-i18n="ct_eyebrow">Enquire</p>
+    <h2 class="reveal" data-i18n="ct_title">Let's build something<br><em>that scales.</em></h2>
+    <p class="section-sub reveal" data-i18n="ct_sub">Open to senior backend, tech lead and full-stack roles, and to consulting on distributed systems and AI pipelines.</p>
 
     <div class="contact-grid">
       <a class="contact-card reveal" href="mailto:m.islamkamran@gmail.com">
         <i class="fa-regular fa-envelope"></i>
-        <span class="cc-label">Email</span>
+        <span class="cc-label" data-i18n="cc_email">Email</span>
         <span class="cc-value">m.islamkamran@gmail.com</span>
       </a>
       <a class="contact-card reveal" href="https://wa.me/971556643426" target="_blank" rel="noopener">
         <i class="fa-brands fa-whatsapp"></i>
-        <span class="cc-label">WhatsApp / Phone</span>
+        <span class="cc-label" data-i18n="cc_wa">WhatsApp / Phone</span>
         <span class="cc-value">+971 55 664 3426</span>
       </a>
       <a class="contact-card reveal" href="https://www.linkedin.com/in/muhammadislamkamran" target="_blank" rel="noopener">
         <i class="fa-brands fa-linkedin-in"></i>
-        <span class="cc-label">LinkedIn</span>
+        <span class="cc-label" data-i18n="cc_li">LinkedIn</span>
         <span class="cc-value">/in/muhammadislamkamran</span>
       </a>
       <a class="contact-card reveal" href="https://github.com/islamkamran" target="_blank" rel="noopener">
@@ -484,8 +502,8 @@
     </div>
 
     <div class="contact-cv reveal">
-      <a href="files/Muhammad_Islam_Kamran_Backend_Engineer.pdf" class="btn btn-gold" target="_blank" rel="noopener"><i class="fa-solid fa-download"></i> Backend &amp; AI CV</a>
-      <a href="files/Muhammad_Islam_Kamran_FullStack_Engineer.pdf" class="btn btn-outline" target="_blank" rel="noopener"><i class="fa-solid fa-download"></i> Full Stack CV</a>
+      <a href="files/Muhammad_Islam_Kamran_Backend_Engineer.pdf" class="btn btn-gold" target="_blank" rel="noopener"><i class="fa-solid fa-download"></i> <span data-i18n="cv_btn_be">Backend &amp; AI CV</span></a>
+      <a href="files/Muhammad_Islam_Kamran_FullStack_Engineer.pdf" class="btn btn-outline" target="_blank" rel="noopener"><i class="fa-solid fa-download"></i> <span data-i18n="cv_btn_fs">Full Stack CV</span></a>
     </div>
   </div>
 </section>
@@ -494,12 +512,13 @@
 
 <footer class="site-footer">
   <div class="container footer-inner">
-    <span>© <span id="year">2026</span> Muhammad Islam Kamran</span>
-    <span>Dubai, UAE</span>
-    <a href="#top">Back to top <i class="fa-solid fa-arrow-up"></i></a>
+    <span>© <span id="year">2026</span> <span data-i18n="ft_name">Muhammad Islam Kamran</span></span>
+    <span data-i18n="loc_dubai">Dubai, UAE</span>
+    <a href="#top"><span data-i18n="ft_top">Back to top</span> <i class="fa-solid fa-arrow-up"></i></a>
   </div>
 </footer>
 
+<script src="assets/js/i18n.js"></script>
 <script src="assets/js/main.js"></script>
 </body>
 </html>
