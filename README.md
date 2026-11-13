@@ -1,6 +1,6 @@
 # islamkamran.github.io
 
-Personal portfolio of **Muhammad Islam Kamran**, Senior Backend & Distributed Systems Engineer (Dubai, UAE).
+Personal portfolio of **Muhammad Islam Kamran**, Backend Engineer, Python & FastAPI (Dubai, UAE).
 
 Live: https://islamkamran.github.io
 
