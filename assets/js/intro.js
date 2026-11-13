@@ -32,13 +32,13 @@
   var svg     = intro.querySelector('.intro-sig');
 
   /* ---- Timeline (ms) — tweak these to change the pace ---- */
-  var WORD_START = 300;            // first word ("Muhammad")
-  var WORD_GAP   = 500;            // between words
-  var SIGN_DELAY = 900;            // after the last word, before the pen starts
-  var PEN_SPEED  = 900;           // svg units per ms (lower = slower signing)
-  var PAUSE_MULT = 1.2;            // multiplies the pen-lift pauses in the HTML
-  var HOLD       = 600;           // admire the finished signature
-  var EXIT_MS    = 600;            // fade/slide away
+  var WORD_START = 200;            // first word ("Muhammad")
+  var WORD_GAP   = 200;            // between words
+  var SIGN_DELAY = 300;            // after the last word, before the pen starts
+  var PEN_SPEED  = 2;           // svg units per ms (lower = slower signing)
+  var PAUSE_MULT = 0.5;            // multiplies the pen-lift pauses in the HTML
+  var HOLD       = 300;           // admire the finished signature
+  var EXIT_MS    = 200;            // fade/slide away
 
   var SIGN_START = WORD_START + WORD_GAP * (words.length - 1) + SIGN_DELAY;
   var finished = false, timers = [], raf = 0;
